@@ -1512,7 +1512,7 @@ Format de réponse — tableau JSON STRICT, pas de markdown, UNIQUEMENT le JSON 
 [{"scene":"Accroche","vo":"texte voix off","visual":"description visuel IA à générer","duration":"Xs","type":"s${dur}"},...]
 Crée ${Math.ceil(parseInt(dur)/15)} scènes. Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+    const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'Tu es expert scriptwriter. Réponds uniquement avec du JSON valide, sans markdown ni backticks.',messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
     if(d.error)throw new Error(d.error.message);
@@ -1555,7 +1555,7 @@ function fillEmailSel(){
 const SYS_PROMPT=`Tu es un expert en marketing d'autorité incarnant trois archétypes : le Sage (vérité, autorité, clarté), le Magicien (transformation, vision, impact), le Conseiller (écoute, stratégie, confiance). Tu rédiges du contenu premium pour des dirigeants d'entreprise (CEO, PDG de PME). Ton français est impeccable, inspirant, direct. Tu ne vends pas — tu transformes. Tes arguments : expertise certifiée, financement formation disponible, références clients premium, plateforme e-learning disponible.`;
 
 async function callAI(userPrompt,maxTokens=1000){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+  const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system:SYS_PROMPT,messages:[{role:'user',content:userPrompt}]})});
   const d=await r.json();
   if(d.error)throw new Error(d.error.message);
